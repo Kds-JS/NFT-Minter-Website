@@ -13,7 +13,7 @@ import img7 from './img/7.png';
 import img8 from './img/8.png';
 import img9 from './img/9.png';
 import img10 from './img/10.png';
-import { Contract } from 'hardhat/internal/hardhat-network/stack-traces/model';
+
 
 const GGaddress = "0xcE47A9Cd15401Cd5a386B444D390A9CF7827d895";
 
@@ -21,10 +21,20 @@ function App() {
 
   const [error, setError] = useState('');
   const [data, setData] = useState({});
+  const [account, setAccount] = useState();
 
   useEffect(() => {
     fetchData();
+    getAccounts();
   }, [])
+
+  async function getAccounts() {
+    if(typeof window.ethereum !== 'undefined') {
+      let accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
+      setAccount(accounts);
+      console.log(account[0]);
+    }
+  }
 
   async function fetchData() {
     if(typeof window.ethereum !== 'undefined') {
@@ -80,9 +90,15 @@ function App() {
     }
   }
 
+  console.log(account && account[0] === "0x3a098505103ccf5e5cc21b60df7aad9daf7a6241");
+
   return (
     <div className="App">
-      <button className='withdraw' onClick={withdraw}>Withdraw</button>
+      { account && (
+        <div>
+          {account[0] === "0x3a098505103ccf5e5cc21b60df7aad9daf7a6241" && <button className='withdraw' onClick={withdraw}>Withdraw</button>}
+        </div>
+      ) }
       <div className="container">
         <div className="banniere">
           <img src={img1} alt="img" />

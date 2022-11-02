@@ -23,8 +23,8 @@ module.exports = {
   },
   networks: {
     goerli: {
-      url: "goerli infura link",
-      accounts: ['owner private key']
+      url: "goerli Infura link",
+      accounts: ['contract Owner private key']
     }
   }
 };
